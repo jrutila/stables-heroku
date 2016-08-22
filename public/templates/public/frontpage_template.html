@@ -1,0 +1,65 @@
+{% extends "public/base.html" %}
+{% load cms_tags %}
+{% load sekizai_tags %}
+{% load public_tags %}
+{% load i18n %}
+
+{% block content %}
+
+   <section id="feature_slider">
+       {% get_slider %}
+   </section>
+
+   <div id="showcase">
+       <div class="container">
+           <div class="section_header">
+         <h3>Tuote</h3>
+            </div>
+  {% placeholder content %}
+
+       </div>
+   </div>
+
+   {% render_feature %}
+
+{% endblock content %}
+
+{% block footer %}
+   <footer id="footer">
+       <div class="container">
+           <div class="row sections">
+               <!--
+               <div class="col-sm-4 blog">
+               </div>
+               -->
+               <div class="col-sm-6 testimonials">
+                   {% random_testimonial %}
+               </div>
+               <div class="col-sm-5 contact">
+                   <h3 class="footer_header">
+                       {% trans "Contact" %}
+                   </h3>
+                   <form action="{% page_url "contact" %}" method="post">
+                       {% csrf_token %}
+                       <input name="name" type="text" placeholder="{% trans "Your name" %}"/>
+                       <input name="mail" type="text" placeholder="{% trans "Your email" %}"/>
+                       <textarea name="message" rows="3" placeholder="{% trans "Message" %}"></textarea>
+                       <input type="submit" value="{% trans "Send" %}" />
+                   </form>
+               </div>
+           </div>
+           <div class="row credits">
+               <div class="col-md-12">
+                   <div class="row copyright">
+                       <center>
+                            +358 44 767 1369 | info@sandis.fi
+                        </center>
+                   </div>
+                   <div class="row copyright">
+                       Palvelun tuottaa Sandis Solutions Oy
+                   </div>
+               </div>
+           </div>
+       </div>
+   </footer>
+{% endblock footer %}

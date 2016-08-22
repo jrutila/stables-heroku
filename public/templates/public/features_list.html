@@ -1,0 +1,26 @@
+{% load cms_tags %}
+{% load placeholder_tags %}
+{% for f in features %}
+<div class='row feature'>
+
+    <div class='col-sm-6
+    {% if forloop.counter|divisibleby:2 %}
+    pic-right
+    {% endif %}
+        '>
+        {% render_placeholder f.plchld.img %}
+    </div>
+    <div class='col-sm-6 info
+    {% if forloop.counter|divisibleby:2 %}
+    into-left
+    {% endif %}
+        '>
+        <h3>
+            {% render_placeholder f.plchld.icon %}
+            {{ f.get_title }}
+        </h3>
+        {% render_placeholder f.plchld.info %}
+    </div>
+
+</div>
+{% endfor %}

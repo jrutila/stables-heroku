@@ -1,0 +1,29 @@
+{% load cms_tags %}
+{% load placeholder_tags %}
+{% load sekizai_tags %}
+
+{% addtoblock "css" %}
+<style>
+.author img {
+    border-radius: 50%;
+}
+</style>
+{% endaddtoblock %}
+
+<h3 class="footer_header">
+    {{ root.get_title }}
+</h3>
+<div class="wrapper">
+    <div class="quote">
+        <span>“</span>
+        {% render_placeholder quote %}
+        <span></span>
+    </div>
+    <div class="author">
+        {% render_placeholder img %}
+        <div class="name">{% render_placeholder name %}</div>
+        <div class="info">
+            {% render_placeholder info %}
+        </div>
+    </div>
+</div>

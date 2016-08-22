@@ -1,0 +1,8 @@
+{% load cms_tags %}
+{% load placeholder_tags %}
+
+{% for s in slides %}
+<article class="slide" id="{{ s.get_slug }}" style="background: url('{{ s.background }}')">
+    {% render_placeholder s.plchld.content %}
+</article>
+{% endfor %}

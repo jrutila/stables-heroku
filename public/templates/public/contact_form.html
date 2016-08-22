@@ -1,0 +1,33 @@
+{% if form %}
+<form action="" method="POST">
+    {% csrf_token %}
+    <div class="row form">
+        <div class="col-sm-6 row-col">
+            <div class="box">
+                {% for field in form %}
+                {% if field.name != "message" and field.name != "accept_terms" %}
+                <input name="{{ field.name }}" type="text" class="error {{ field.name }} form-control" placeholder="{{ field.label }}" value="{{ field.value|default_if_none:"" }}"/>
+                {{ field.errors }}
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="box">
+                <textarea name="message" placeholder="{{ form.message.help_text }}" class="form-control">{{ form.message.value|default_if_none:"" }}</textarea>
+                {{ form.message.errors }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row submit">
+        <div class="col-md-5 box">
+        </div>
+        <div class="col-md-3 right">
+            <input type="submit" value="Lähetä viesti">
+        </div>
+    </div>
+</form>
+{% else %}
+ {{ contact.thanks|safe }}
+{% endif %}

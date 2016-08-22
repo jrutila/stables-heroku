@@ -1,0 +1,17 @@
+{% load cms_tags %}
+{% load sekizai_tags staticfiles %}
+{% load public_tags %}
+
+<div id='features' class="features_page">
+  <div class="container">
+    <div class="feature_wrapper option1">
+      <div class="section_header">
+          <h3>{{ root.get_title }}</h3>
+      </div>
+      <div class="row subtitle">
+          {% placeholder subtitle %}
+      </div>
+      {% get_features %}
+    </div>
+  </div>
+</div>

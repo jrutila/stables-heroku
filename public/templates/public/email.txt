@@ -1,0 +1,6 @@
+{% load i18n %}
+{% trans "Message from" %}: {{ data.name }} ({{ data.email }})
+{% trans "Phone number" %}: {{ data.phone }}
+
+{{ data.message|safe }}
+

@@ -26,9 +26,9 @@ else:
     DEBUG_TOOLBAR_CONFIG = { 'INTERCEPT_REDIRECTS': False }
     EMAIL_PORT = 1025
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-    SOUTH_MIGRATION_MODULES = {
-        'easy_thumbnails': 'easy_thumbnails.south_migrations',
-    }
+    #SOUTH_MIGRATION_MODULES = {
+        #'easy_thumbnails': 'easy_thumbnails.south_migrations',
+    #}
     MERCHANT_ID="13466"
     MERCHANT_PASS="6pKF4jkv97zmqBJ3ZL8gUw5DfT2NMQ"
     TEST_SMS="+358447671369"
@@ -68,6 +68,11 @@ else:
             'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
         }
     }
+
+DATABASE_ROUTERS = (
+  'tenant_schemas.routers.TenantSyncRouter',
+)
+
 
 CACHES = {
         'default': {
@@ -187,7 +192,7 @@ MIDDLEWARE_CLASSES = (
     'corsheaders.middleware.CorsMiddleware',
     'tenant_schemas.middleware.TenantMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'middleware.TimezoneMiddleware',
+    'main.middleware.TimezoneMiddleware',
     # Enable when adding more languages
     #'django.middleware.locale.LocaleMiddleware',
     #'babeldjango.middleware.LocaleMiddleware',
@@ -197,7 +202,7 @@ MIDDLEWARE_CLASSES = (
     'tenant.middleware.AuthenticationMiddleware',
     'tenant.middleware.RestrictTenantStaffToAdminMiddleware',
     'reversion.middleware.RevisionMiddleware',
-    'django.middleware.transaction.TransactionMiddleware',
+    #'django.middleware.transaction.TransactionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     #'middleware.LoginRequiredMiddleware',
     'cms.middleware.page.CurrentPageMiddleware',
@@ -213,14 +218,7 @@ if not ON_OPENSHIFT:
     INTERNAL_IPS = ('127.0.0.1',)
 
 #ROOT_URLCONF = 'openshift.urls'
-ROOT_URLCONF = 'urls'
-
-TEMPLATE_DIRS = (
-    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
-    os.path.join(PROJECT_DIR, 'templates'),
-)
+ROOT_URLCONF = 'main.urls'
 
 CMS_TEMPLATES = (
         ('public/cms_template.html', 'Basic template'),
@@ -247,17 +245,28 @@ THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.filters',
 )
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.request",
-    "django.core.context_processors.static",
-    'django.contrib.messages.context_processors.messages',
-    'cms.context_processors.media',
-    'sekizai.context_processors.sekizai',
-)
+TEMPLATES = [
+  {
+    'BACKEND': 'django.template.backends.django.DjangoTemplates',
+    'DIRS': [
+      os.path.join(PROJECT_DIR, 'templates'),
+    ],
+    'APP_DIRS': True,
+    'OPTIONS': {
+      'context_processors': [
+        "django.contrib.auth.context_processors.auth",
+        "django.template.context_processors.debug",
+        "django.template.context_processors.i18n",
+        "django.template.context_processors.media",
+        "django.template.context_processors.request",
+        "django.template.context_processors.static",
+        'django.contrib.messages.context_processors.messages',
+        'cms.context_processors.media',
+        'sekizai.context_processors.sekizai',
+      ]
+    },
+  },
+]
 
 LOGIN_REDIRECT_URL = '/'
 
@@ -274,7 +283,7 @@ SHARED_APPS = (
     'django.contrib.admin',
     'django.contrib.sites',
 
-    'south',
+    #'south',
 
     'mptt',
     'rest_framework',
@@ -285,8 +294,10 @@ SHARED_APPS = (
     'corsheaders',
 
     'cms',
-    'cms.plugins.text',
-    'cms.plugins.link',
+    'treebeard',
+    'cmsplugin_cascade',
+    #'cms.plugins.text',
+    #'cms.plugins.link',
 
     'cmsplugin_filer_image',
     'filer',
@@ -311,45 +322,47 @@ TENANT_APPS = (
     'django.contrib.sites',
 
     # TODO: Deprecation warning: Django 1.6
-    'fluent_comments',
-    'django.contrib.comments',
+    'django_comments',
+    #'fluent_comments',
 
     'grappelli.dashboard',
     'grappelli',
 
-    'south',
+    #'south',
 
     'stables',
     'schedule',
     'reversion',
     'reportengine',
 
-    'shop',
+    #'shop',
     #'shop.addressmodel',
-    'stables_shop',
+    #'stables_shop',
+    #'discount',
 
     'django_settings',
 )
 
-INSTALLED_APPS = SHARED_APPS + TENANT_APPS + ('tenant_schemas', )
+INSTALLED_APPS = tuple(set(SHARED_APPS + TENANT_APPS + ('tenant_schemas', 'polymorphic', )))
 
-if not ON_OPENSHIFT:
-    INSTALLED_APPS = INSTALLED_APPS + ('devserver', 'debug_toolbar',)
-    DEBUG_TOOLBAR_CONFIG = {
-      'JQUERY_URL':'',
-    }
+#if not ON_OPENSHIFT:
+    #INSTALLED_APPS = INSTALLED_APPS + ('devserver', 'debug_toolbar',)
+    #DEBUG_TOOLBAR_CONFIG = {
+      #'JQUERY_URL':'',
+    #}
 
 if 'test' in sys.argv:
     INSTALLED_APPS = [app for app in INSTALLED_APPS if app != 'south']
 
 TENANT_MODEL = 'tenant.Client'
 
-SOUTH_DATABASE_ADAPTERS = {
-    'default': 'south.db.postgresql_psycopg2',
-}
+#SOUTH_DATABASE_ADAPTERS = {
+    #'default': 'south.db.postgresql_psycopg2',
+#}
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+SHOP_APP_LABEL='shop'
 SHOP_SHIPPING_BACKENDS = ['stables_shop.backends.DigitalShipping',]
 SHOP_PAYMENT_BACKENDS = ['stables_shop.backends.PayTrailBackend', 'shop.payment.backends.prepayment.ForwardFundBackend']
 SHOP_CART_MODIFIERS = ['stables_shop.modifiers.FixedVATRate',]

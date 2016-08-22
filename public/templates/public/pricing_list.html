@@ -1,0 +1,18 @@
+{% load cms_tags %}
+{% load placeholder_tags %}
+{% for p in pricings %}
+<div class='col-sm-4'>
+    <div class="plan">
+        <div class="wrapper">
+
+        </div>
+        <div class="price">
+            <span class="euro">€</span>
+            <span class="qty">
+                {% render_placeholder f.plchld.price %}
+            </span>
+            <span class="month">/kk</span>
+        </div>
+    </div>
+</div>
+{% endfor %}

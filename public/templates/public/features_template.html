@@ -1,0 +1,14 @@
+{% extends "public/base.html" %}
+{% load cms_tags %}
+{% load sekizai_tags staticfiles %}
+{% load public_tags %}
+
+{% block content %}
+
+{% addtoblock "css" %}
+    <link rel="stylesheet" href="{% static "theme/clean-canvas/css/compiled/features.css" %}" type="text/css" />    
+{% endaddtoblock %}
+
+{% include "public/_features.html" %}
+
+{% endblock content %}
