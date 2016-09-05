@@ -273,6 +273,7 @@ LOGIN_REDIRECT_URL = '/'
 PUBLIC_SCHEMA_URLCONF = 'public.urls'
 
 SHARED_APPS = (
+    'tenant_schemas',
     'tenant',
 
     'django.contrib.auth',
@@ -292,18 +293,6 @@ SHARED_APPS = (
 
     'backbone_tastypie',
     'corsheaders',
-
-    'cms',
-    'treebeard',
-    'cmsplugin_cascade',
-    #'cms.plugins.text',
-    #'cms.plugins.link',
-
-    'cmsplugin_filer_image',
-    'filer',
-    'easy_thumbnails',
-
-    'cmsplugin_contact',
 
     'menus',
     'reversion',
@@ -335,15 +324,27 @@ TENANT_APPS = (
     'reversion',
     'reportengine',
 
-    #'shop',
+    'cms',
+    'treebeard',
+    'cmsplugin_cascade',
+    #'cms.plugins.text',
+    #'cms.plugins.link',
+    'cmsplugin_filer_image',
+    'filer',
+    'easy_thumbnails',
+    'cmsplugin_contact',
+
+    'post_office',
+    'shop',
+    'discount',
+    'stables_shop',
     #'shop.addressmodel',
-    #'stables_shop',
-    #'discount',
 
     'django_settings',
 )
 
-INSTALLED_APPS = tuple(set(SHARED_APPS + TENANT_APPS + ('tenant_schemas', 'polymorphic', )))
+INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
+#INSTALLED_APPS = tuple(set(SHARED_APPS + TENANT_APPS + ('tenant_schemas', 'polymorphic', )))
 
 #if not ON_OPENSHIFT:
     #INSTALLED_APPS = INSTALLED_APPS + ('devserver', 'debug_toolbar',)
