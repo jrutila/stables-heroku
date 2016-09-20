@@ -66,7 +66,18 @@ else:
             'PASSWORD': '',                  # Not used with sqlite3.
             'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
             'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
-        }
+        },
+        'old': {
+            #'ENGINE': 'tenant_schemas.postgresql_backend', 
+            'ENGINE': 'tenant_schemas.postgresql_backend'
+                if not 'test' in sys.argv else 'django.db.backends.sqlite3',
+            'NAME': 'old',
+            'USER': 'talli',                      # Not used with sqlite3.
+            'PASSWORD': '',                  # Not used with sqlite3.
+            'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        },
+
     }
 
 DATABASE_ROUTERS = (
@@ -363,7 +374,7 @@ TENANT_MODEL = 'tenant.Client'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-SHOP_APP_LABEL='shop'
+SHOP_APP_LABEL='stables_shop'
 SHOP_SHIPPING_BACKENDS = ['stables_shop.backends.DigitalShipping',]
 SHOP_PAYMENT_BACKENDS = ['stables_shop.backends.PayTrailBackend', 'shop.payment.backends.prepayment.ForwardFundBackend']
 SHOP_CART_MODIFIERS = ['stables_shop.modifiers.FixedVATRate',]
