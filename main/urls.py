@@ -23,7 +23,7 @@ urlpatterns = patterns('',
     (r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /", mimetype="text/plain")),
     url(r'^accounts/login/$', 'django.contrib.auth.views.login', { 'authentication_form': EmailAuthenticationForm }, name='login'),
     url(r'^accounts/', include('django.contrib.auth.urls')),
-    url(r'^api-help/', 'views.api', name='api-help'),
+    #url(r'^api-help/', 'views.api', name='api-help'),
     #url(r'^shopper/pay/(?P<id>\d+)$', ParticipationPaymentRedirect.as_view(), name='shop-pay'),
     #rl(r'^shopper/pay/(?P<hash>\w+)$', ParticipationPayment.as_view(), name='shop-pay'),
     #rl(r'^shopper/pay/(?P<hash>\w+)/success$', ParticipationPaymentSuccess.as_view(), name='shop-pay-success'),
@@ -44,7 +44,7 @@ urlpatterns = patterns('',
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Uncomment the next line to enable the admin:
-    url(r'^admin/', include(admin.site.urls)),
+    url('^admin/', include(admin.site.urls)),
 
     #url(r'^api/', include(router.urls)),
 )
