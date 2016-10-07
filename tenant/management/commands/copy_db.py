@@ -2,6 +2,8 @@ from io import StringIO
 from django.contrib.contenttypes.models import ContentType
 from django.core.management import BaseCommand
 from django.db import connections
+from django.utils import timezone
+
 from tenant.models import Client
 
 __author__ = 'jorutila'
@@ -88,10 +90,11 @@ class Command(BaseCommand):
                 "order_subtotal": "_subtotal", "order_total": "_total",
                 "created": "created_at", "modified": "updated_at",
             },
+            "convert": { "status": lambda x: "payment_confirmed" },
             "script": {
                 "customer_id": self.customerfororder
             },
-            "missing": ["cart_pk", "user_id"],
+            "missing": ["cart_pk", "user_id", "billing_address_text"],
             "defaults": { "currency": "EUR", "extra": "", "stored_request": "" }
         }
         tables['stables_shop_product'] = {
@@ -123,7 +126,11 @@ class Command(BaseCommand):
         tables['shop_orderextrainfo'] = {
             "data": self.insertorderextra
         }
-        #tables['shop_orderpayment'] = {}
+        tables['shop_orderpayment'] = {
+            "table": "stables_shop_orderpayment",
+            "defaults": { "created_at": timezone.now()},
+            "where": "order_id in (select id from %(schema_name)s.shop_order where status = 50)",
+        }
         tables['stables_course'] = {}
         tables['stables_horse'] = {}
         tables['stables_instructorinfo'] = {}
@@ -151,14 +158,15 @@ class Command(BaseCommand):
         tables['stables_shop_enrollproductactivator'] = {}
         tables['stables_shop_partshorturl'] = {}
         tables['stables_shop_productactivator'] = {}
-        tables['stables_shop_ticketproduct'] = { "convert": { "duration": lambda x: "%s second" % int(x/1000000) if x else "\\N" }}
-        tables['stables_shop_ticketproductactivator'] = { "convert": { "duration": lambda x: "%s second" % int(x/1000000) if x else "\\N" }}
+        tables['stables_shop_ticketproduct'] = {}
+        tables['stables_shop_ticketproductactivator'] = {}
         tables['stables_transaction'] = { "convert": { "content_type_id": "content_type" }}
         tables['stables_ticket'] = { "convert": { "owner_type_id": "content_type" }}
         tables['django_settings_setting'] = { "convert": { "setting_type_id": "content_type" }}
         tables['django_settings_email'] = {}
         tables['django_settings_integer'] = {}
-        tables['django_settings_longstring'] = { "table": "stables_shop_longstring" }
+        #tables['django_settings_longstring'] = { "table": "stables_shop_longstring" }
+        tables['stables_shop_longstring'] = { "table": "stables_shop_longstring" }
         tables['django_settings_positiveinteger'] = {}
         tables['django_settings_string'] = {}
 
