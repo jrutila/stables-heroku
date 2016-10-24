@@ -169,10 +169,15 @@ BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_DIR, '..', 'components')
 
 BOWER_INSTALLED_APPS = (
         'momentjs#2.7.0',
-        'underscore#1.6.0',
+        'underscore#1.8.3',
         'jquery-slugify#1.0.3',
         'bootstrap#3.2.0',
-        'jquery-validate#1.13.0'
+        'jquery-validate#1.13.0',
+        'backbone#1.3.3',
+        'backbone.do#1.0.0',
+        'font-awesome-css#4.0.3',
+        'jquery.cookie#1.4.1',
+        'backbone-tastypie',
         )
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
@@ -272,7 +277,7 @@ TEMPLATES = [
         "django.template.context_processors.request",
         "django.template.context_processors.static",
         'django.contrib.messages.context_processors.messages',
-        'cms.context_processors.media',
+        #'cms.context_processors.cms_settings',
         'sekizai.context_processors.sekizai',
       ]
     },
@@ -357,8 +362,8 @@ TENANT_APPS = (
 INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
 #INSTALLED_APPS = tuple(set(SHARED_APPS + TENANT_APPS + ('tenant_schemas', 'polymorphic', )))
 
-#if not ON_OPENSHIFT:
-    #INSTALLED_APPS = INSTALLED_APPS + ('devserver', 'debug_toolbar',)
+if not ON_OPENSHIFT:
+    INSTALLED_APPS = INSTALLED_APPS + ['debug_toolbar']
     #DEBUG_TOOLBAR_CONFIG = {
       #'JQUERY_URL':'',
     #}
