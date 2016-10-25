@@ -178,6 +178,7 @@ BOWER_INSTALLED_APPS = (
         'font-awesome-css#4.0.3',
         'jquery.cookie#1.4.1',
         'backbone-tastypie',
+        'datatables#1.10.12'
         )
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
