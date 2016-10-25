@@ -237,23 +237,6 @@ if not ON_OPENSHIFT:
 #ROOT_URLCONF = 'openshift.urls'
 ROOT_URLCONF = 'main.urls'
 
-CMS_TEMPLATES = (
-        ('public/cms_template.html', 'Basic template'),
-        ('public/features_template.html', 'Features page'),
-        ('public/pricing_template.html', 'Pricing page'),
-        ('public/frontpage_template.html', 'Frontpage'),
-        ('public/contact_template.html', 'Contact page'),
-        ('public/feature.html', 'Feature template'),
-        ('public/pricing_option.html', 'Pricing template (under pricing page)'),
-        ('public/testimonial.html', 'Testimonial template'),
-        ('public/slider.html', 'Slider template'),
-)
-
-CMSPLUGIN_CONTACT_FORMS = (
-        #('cmsplugin_contact.forms.ContactForm', 'default'),
-        ('public.forms.ContactForm', 'Contact form'),
-)
-
 THUMBNAIL_PROCESSORS = (
     'easy_thumbnails.processors.colorspace',
     'easy_thumbnails.processors.autocrop',
