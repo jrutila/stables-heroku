@@ -44,7 +44,7 @@ class Command(BaseCommand):
     def insertorderextra(self, new, data, schema):
         for d in data:
             d['schema'] = schema
-            new.execute("update %(schema)s.stables_shop_order set extra ='%(text)s' where id = %(order_id)d" % d)
+            new.execute("update %(schema)s.stables_shop_order set extra ='{ \"message\": \"%(text)s\" }' where id = %(order_id)d" % d)
 
     def add_arguments(self, parser):
          # Named (optional) arguments
@@ -95,7 +95,7 @@ class Command(BaseCommand):
                 "customer_id": self.customerfororder
             },
             "missing": ["cart_pk", "user_id", "billing_address_text"],
-            "defaults": { "currency": "EUR", "extra": "", "stored_request": "" }
+            "defaults": { "currency": "EUR", "extra": "{}", "stored_request": "" }
         }
         tables['stables_shop_product'] = {
             "rename": { "name": "product_name", "date_added": "created_at", "last_modified": "updated_at" },
@@ -119,7 +119,7 @@ class Command(BaseCommand):
                         },
             "where": "order_id in (select id from %(schema_name)s.shop_order where status = 50)",
             "missing": ["line_subtotal"],
-            "defaults": {"extra": ""}
+            "defaults": {"extra": "{}"}
         }
         #tables['shop_extraorderpricefield'] = { }
         #tables['shop_extraorderitempricefield'] = {}
