@@ -44,7 +44,7 @@ class Command(BaseCommand):
     def insertorderextra(self, new, data, schema):
         for d in data:
             d['schema'] = schema
-            new.execute("update %(schema)s.stables_shop_order set extra ='{ \"message\": \"%(text)s\" }' where id = %(order_id)d" % d)
+            new.execute("update %(schema)s.stables_shop_order set extra = regexp_replace('{ \"message\": \"%(text)s\" }', E'[\\n]', '\\n', 'g') where id = %(order_id)d" % d)
 
     def add_arguments(self, parser):
          # Named (optional) arguments
