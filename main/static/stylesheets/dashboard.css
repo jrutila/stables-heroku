@@ -1,0 +1,10 @@
+#dashboard-picker .caret {
+    border-bottom: 4px solid #000000;
+    border-top: 0 dotted;
+    border-bottom-color: white;
+}
+#dashboard-picker.collapsed .caret {
+    border-top: 4px solid #000000;
+    border-bottom: 0 dotted;
+    border-top-color: white;
+}

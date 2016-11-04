@@ -1,0 +1,30 @@
+#feature_slider .slide#you .info {
+  position: absolute;
+  top: 50px;
+  width: 100%;
+  display: none;
+  z-index: 10; }
+#feature_slider .slide#you .info h1 {
+  top: 34px;
+  text-align: center;
+  color: #fff;
+  font-size: 86px;
+  font-weight: normal;
+  line-height: 56px;
+  text-shadow: 1px 1px 1px #31393d;
+}
+#feature_slider .slide#you .info h2 {
+  top: 109px;
+  position: relative;
+  text-align: center;
+  color: #fff;
+  font-size: 50px;
+  font-weight: normal;
+  line-height: 56px;
+  text-shadow: 1px 1px 1px #31393d;
+}
+
+#feature_slider .slide#you .credits {
+    top: inherit;
+    bottom: 0px;
+}
