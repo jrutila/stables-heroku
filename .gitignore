@@ -1,0 +1,17 @@
+*.py[co]
+*.sw[po]
+*.bak
+*.orig
+*~
+.project
+.pydevproject
+.sass-cache
+wsgi/static/
+.idea/
+wsgi/components/
+wsgi/media/
+venv/
+components/
+data/
+*.sqlite3
+/static/
