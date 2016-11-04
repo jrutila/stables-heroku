@@ -44,7 +44,7 @@ class Command(BaseCommand):
     def insertorderextra(self, new, data, schema):
         for d in data:
             d['schema'] = schema
-            new.execute("update %(schema)s.stables_shop_order set extra = regexp_replace('{ \"message\": \"%(text)s\" }', E'[\\n]', '\\n', 'g') where id = %(order_id)d" % d)
+            new.execute("update %(schema)s.stables_shop_order set extra = regexp_replace(regexp_replace('{ \"message\": \"%(text)s\" }', E'[\\n]', '\\n', 'g'), E'[\\r]', '', 'g') where id = %(order_id)d" % d)
 
     def add_arguments(self, parser):
          # Named (optional) arguments
@@ -90,12 +90,12 @@ class Command(BaseCommand):
                 "order_subtotal": "_subtotal", "order_total": "_total",
                 "created": "created_at", "modified": "updated_at",
             },
-            "convert": { "status": lambda x: "payment_confirmed" },
+            "convert": { "status": lambda x: x },
             "script": {
                 "customer_id": self.customerfororder
             },
             "missing": ["cart_pk", "user_id", "billing_address_text"],
-            "defaults": { "currency": "EUR", "extra": "{}", "stored_request": "" }
+            "defaults": { "currency": "EUR", "extra": "{}", "stored_request": "{}" }
         }
         tables['stables_shop_product'] = {
             "rename": { "name": "product_name", "date_added": "created_at", "last_modified": "updated_at" },
