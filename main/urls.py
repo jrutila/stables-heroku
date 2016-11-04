@@ -33,7 +33,7 @@ urlpatterns = patterns('',
     #rl(r'^shopper/info/$', InfoView.as_view(), name='shop-info'),
     #url(r'^shopper/', include(shop_urls)),
     #url(r'^shop/$', ShopRedirectView.as_view(), name='shop-in'),
-    #url(r'^s/', include('stables_shop.urls')),
+    url(r'^s/', include('stables_shop.urls')),
     url(r'^cal/', include('schedule.urls')),
     url(r'^', include('stables.urls')),
 
