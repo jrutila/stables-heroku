@@ -12,18 +12,14 @@ from .forms import EmailAuthenticationForm
 
 admin.autodiscover()
 
-#from rest_framework import routers
-#from stables.api import ParticipationViewSet
-
-#router = routers.DefaultRouter()
-#router.register(r'participations', ParticipationViewSet)
+from stables.urls import api
 
 urlpatterns = patterns('',
     # Examples:
     (r'^robots\.txt$', lambda r: HttpResponse("User-agent: *\nDisallow: /", mimetype="text/plain")),
     url(r'^accounts/login/$', 'django.contrib.auth.views.login', { 'authentication_form': EmailAuthenticationForm }, name='login'),
     url(r'^accounts/', include('django.contrib.auth.urls')),
-    #url(r'^api-help/', 'views.api', name='api-help'),
+    url(r'^api-help/', 'stables.views.api.api_help', name='api-help'),
     #url(r'^shopper/pay/(?P<id>\d+)$', ParticipationPaymentRedirect.as_view(), name='shop-pay'),
     #rl(r'^shopper/pay/(?P<hash>\w+)$', ParticipationPayment.as_view(), name='shop-pay'),
     #rl(r'^shopper/pay/(?P<hash>\w+)/success$', ParticipationPaymentSuccess.as_view(), name='shop-pay-success'),
@@ -33,7 +29,8 @@ urlpatterns = patterns('',
     #rl(r'^shopper/info/$', InfoView.as_view(), name='shop-info'),
     #url(r'^shopper/', include(shop_urls)),
     #url(r'^shop/$', ShopRedirectView.as_view(), name='shop-in'),
-    url(r'^s/', include('stables_shop.urls')),
+    url(r'^shop/', include('stables_shop.urls.django_shop')),
+    url(r'^s/', include('stables_shop.urls.manage')),
     url(r'^cal/', include('schedule.urls')),
     url(r'^', include('stables.urls')),
 
@@ -46,7 +43,7 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     url('^admin/', include(admin.site.urls)),
 
-    #url(r'^api/', include(router.urls)),
+    url(r'^api/', include(api)),
 )
 
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns

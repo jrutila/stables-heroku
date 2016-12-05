@@ -54,10 +54,8 @@
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        {%  comment %}
                         <li><a href="{% url "shop-settings" %}">{%  trans "Shop settings" %}</a></li>
                         <li><a href="{% url "api-help" %}">{%  trans "Website integration" %}</a></li>
-                        {% endcomment %}
                     </ul>
                 </li>
                       {% endif %}
@@ -68,10 +66,6 @@
                                 <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu">
-<!--
-                                <li><a href="javascript:;">My Profile</a></li>
-                                <li><a href="javascript:;">My Groups</a></li>
-                                <li class="divider"></li>
 -->
                             <li><a href="{% url "password_change" %} ">{% trans "Change password" %}</a></li>
                             <li><a href="{% url "logout" %} ">{% trans "Logout" %}</a></li>
