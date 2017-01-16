@@ -163,6 +163,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     #'django.contrib.staticfiles.finders.DefaultStorageFinder',
     'djangobower.finders.BowerFinder',
+    'sass_processor.finders.CssFinder',
 )
 
 BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_DIR, '..', 'components')
@@ -178,7 +179,8 @@ BOWER_INSTALLED_APPS = (
         'font-awesome-css#4.0.3',
         'jquery.cookie#1.4.1',
         'backbone-tastypie',
-        'datatables#1.10.12'
+        'datatables#1.10.12',
+        'angular'
         )
 
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.CachedStaticFilesStorage'
@@ -226,6 +228,7 @@ MIDDLEWARE_CLASSES = (
     'cms.middleware.user.CurrentUserMiddleware',
     'cms.middleware.toolbar.ToolbarMiddleware',
     'cms.middleware.language.LanguageCookieMiddleware',
+    'shop.middleware.CustomerMiddleware'
 )
 
 LOGIN_EXEMPT_URLS = (r'^api/', r'^shop/' )
@@ -341,8 +344,18 @@ TENANT_APPS = (
     #'shop.addressmodel',
 
     'django_settings',
+
+    # For the shop
+    'sass_processor',
+    'djng',
 )
 
+NODE_MODULES_URL = os.path.join(PROJECT_DIR, 'node_modules')
+
+SASS_PROCESSOR_INCLUDE_DIRS = [
+    os.path.join(PROJECT_DIR, 'extra-styles/scss'),
+    NODE_MODULES_URL,
+]
 INSTALLED_APPS = list(SHARED_APPS) + [app for app in TENANT_APPS if app not in SHARED_APPS]
 #INSTALLED_APPS = tuple(set(SHARED_APPS + TENANT_APPS + ('tenant_schemas', 'polymorphic', )))
 

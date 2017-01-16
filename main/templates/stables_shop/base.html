@@ -1,0 +1,46 @@
+{% load settings_tags %}
+{% load staticfiles %}
+{% load sekizai_tags %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% settings "shop_name" %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    {% settings "shop_theme" as theme %}
+    <link href="{% static "shop_theme/"|add:theme|add:"/bootstrap.css" %}" rel="stylesheet" media="screen">
+    {% render_block "css" %}
+  </head>
+  <body>
+   <div class="navbar navbar-default">
+     <div class="navbar-header">
+         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+           <span class="icon-bar"></span>
+         </button>
+         <a class="navbar-brand" href="SET SHOP FRONTPAGE{%  comment  %}{% url 'shop_welcome' %}{%  endcomment  %}">{% settings "shop_name" %}</a>
+     </div>
+     <div class="navbar-collapse collapse navbar-responsive-collapse">
+         <ul class="nav navbar-nav navbar-left">
+             {% comment %}
+             <li><a href="{% url 'product_list' %}">Tuotteet</a></li>
+             <li><a href="{% url 'cart' %}">Ostoskorisi</a></li>
+             <li><a href="{% url 'shop-info' %}">Tietoja</a></li>
+             <li><a href="{% settings "shop_homepage" %}" class='navbar-inverse'>Palaa pääsivulle</a></li>
+             {% endcomment %}
+         </ul>
+     </div>
+   </div>
+   <div class="container">
+    {% block body %}
+    {% endblock %}
+   </div>
+    <script type='text/javascript' src="{% static 'jquery/dist/jquery.js' %}"></script>
+    <script type='text/javascript' src="{% static 'bootstrap/dist/js/bootstrap.js' %}"></script>
+    <script type='text/javascript' src="{% static 'angular/dist/js/bootstrap.js' %}"></script>
+    {% block js %}
+    {% endblock %}
+    {% render_block "js" %}
+  </body>
+</html>
