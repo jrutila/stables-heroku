@@ -23,7 +23,7 @@ django-crispy-forms==1.6.0
 django-debug-toolbar==1.5
 django-devserver==0.8.0
 django-durationfield==0.5.2
--e git+git@github.com:jrutila/stables-heroku.git@b875fdbe5760c4fbd13215d8d9253234e3e42aed#egg=django_filer
+django-filer==1.2.6
 django-fluent-comments==0.9.2
 django-formtools==1.0
 django-fsm==2.3.0
