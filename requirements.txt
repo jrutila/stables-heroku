@@ -4,7 +4,7 @@ cmsplugin-contact==1.0.0
 cmsplugin-filer==0.9.5
 coverage==3.6
 diff-match-patch==20121119
-Django==1.10
+Django==1.9.9
 django-annoying==0.7.9
 django-bower==5.1.0
 django-classy-tags==0.7.2
